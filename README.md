@@ -4,7 +4,7 @@ Lab **“Đèn nào bật trước?”** biến mô hình Day 24–25 thành m�
 đèn báo sớm, ngưỡng, luật quyết định và cổng gác 90 ngày. Nội dung gốc và toàn
 bộ benchmark nằm trong [`Day26-AI-Product-Handbook.md`](Day26-AI-Product-Handbook.md).
 
-Repo học viên: <https://github.com/TuNM17421/Day26-Operating-Dashboard-Lab>
+Repo học viên: <https://github.com/VinUni-AI20k/Day26-Track-1-AI-Product-Handbook>
 
 Đây là bài lab về **đọc tín hiệu và ra quyết định**, không phải bài lập trình.
 Python chỉ dùng cho validator offline, không cần package hay API key.
@@ -43,8 +43,8 @@ Hai ngưỡng `[MH]` bắt buộc phải được tính lại từ số của ch
 macOS/Linux:
 
 ```bash
-git clone https://github.com/TuNM17421/Day26-Operating-Dashboard-Lab.git
-cd Day26-Operating-Dashboard-Lab
+git clone https://github.com/VinUni-AI20k/Day26-Track-1-AI-Product-Handbook.git
+cd Day26-Track-1-AI-Product-Handbook
 mkdir -p "submissions/<MÃ-HỌC-VIÊN>"
 cp templates/operating-dashboard-template.md \
   "submissions/<MÃ-HỌC-VIÊN>/operating-dashboard.md"
@@ -55,8 +55,8 @@ python3 scripts/validate_submission.py \
 Windows PowerShell:
 
 ```powershell
-git clone https://github.com/TuNM17421/Day26-Operating-Dashboard-Lab.git
-Set-Location Day26-Operating-Dashboard-Lab
+git clone https://github.com/VinUni-AI20k/Day26-Track-1-AI-Product-Handbook.git
+Set-Location Day26-Track-1-AI-Product-Handbook
 New-Item -ItemType Directory -Force "submissions\<MÃ-HỌC-VIÊN>"
 Copy-Item "templates\operating-dashboard-template.md" `
   "submissions\<MÃ-HỌC-VIÊN>\operating-dashboard.md"

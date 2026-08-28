@@ -31,7 +31,7 @@ Sổ tay này **không phải để đọc hết một lượt**. §2 đọc tr�
 **Không có file Excel.** §3 in sẵn khung bảng để bạn copy sang Google Sheets / Excel / giấy. Đây là chủ ý: Day 24 và Day 25 đã luyện Excel đủ rồi. Day 26 luyện thứ khác — **đọc tín hiệu và ra quyết định**.
 
 **Repo thực hành.** Template nguồn, mẫu dashboard một trang, validator và rubric
-công khai nằm tại https://github.com/TuNM17421/Day26-Operating-Dashboard-Lab.
+công khai nằm tại https://github.com/VinUni-AI20k/Day26-Track-1-AI-Product-Handbook.
 Worksheet nguồn giữ đủ evidence để chấm; chỉ bản rút gọn mới được ép vào trang 1 PDF.
 
 **Một điều cần nói trước.** Sổ tay này có ba bảng điều khiển. Bạn **chỉ dùng một**. Đừng đọc cả ba rồi trộn lại — dashboard trộn ba loại là dashboard không dùng được cho loại nào.

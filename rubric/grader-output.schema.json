@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/TuNM17421/Day26-Operating-Dashboard-Lab/blob/main/rubric/grader-output.schema.json",
+  "$id": "https://github.com/VinUni-AI20k/Day26-Track-1-AI-Product-Handbook/blob/main/rubric/grader-output.schema.json",
   "title": "Day 26 Operating Dashboard grader output",
   "type": "object",
   "additionalProperties": false,
