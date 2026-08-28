@@ -1,0 +1,42 @@
+# Private instructor/codelab material
+/day26-lab-operating-dashboard.md
+/grader_internal/
+/private/
+/gold/private-calibration/
+
+# Student work and exported evidence
+/submissions/*
+!/submissions/.gitkeep
+/out/
+/dist/
+/build/
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+
+# Python caches and test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*~
+.*.swp
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

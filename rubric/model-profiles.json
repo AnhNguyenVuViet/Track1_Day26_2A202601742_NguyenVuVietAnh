@@ -1,0 +1,92 @@
+{
+  "version": "2.0.0",
+  "language": "vi",
+  "profiles": {
+    "B2C": {
+      "diagnosis": {
+        "payer": "Cá nhân/người dùng cuối trả tiền trực tiếp.",
+        "primary_user": "Cá nhân sử dụng sản phẩm cho chính họ.",
+        "end_user_surface": "Sản phẩm chạm và đo được hành vi người dùng cuối trực tiếp."
+      },
+      "first_light": {
+        "canonical_name": "Đường cong retention có phẳng không",
+        "accepted_concepts": [
+          "retention curve flattening",
+          "cohort retention plateau",
+          "retention D30/D60"
+        ],
+        "proxy_rule": "Có thể dùng activation hoặc habit metric nếu bài chỉ ra nó báo trước retention và nêu metric retention downstream."
+      },
+      "common_wrong_reflex": "Đổ thêm tiền acquisition khi retention chưa đứng.",
+      "candidate_lights": [
+        "Đường cong retention có phẳng không",
+        "Activation rate",
+        "p95 cost/user/tháng ÷ ARPU",
+        "Trial → paid",
+        "Retention M12",
+        "Chi phí free tier ÷ tổng COGS",
+        "Tỷ lệ refund",
+        "LTV/CAC · CAC payback · GM"
+      ]
+    },
+    "B2B": {
+      "diagnosis": {
+        "payer": "Doanh nghiệp/tổ chức trả tiền.",
+        "primary_user": "Người dùng vận hành nằm trong hoặc làm việc cho tổ chức trả tiền.",
+        "end_user_surface": "Không cần một quan hệ sản phẩm độc lập với khách hàng của tổ chức để tạo giá trị cốt lõi."
+      },
+      "first_light": {
+        "canonical_name": "Time-to-first-value",
+        "accepted_concepts": [
+          "TTFV",
+          "time to first measurable value",
+          "thời gian tới giá trị đầu tiên"
+        ],
+        "proxy_rule": "Có thể dùng activation/onboarding milestone nếu bài định nghĩa giá trị đo được và chỉ ra quan hệ trực tiếp tới TTFV."
+      },
+      "common_wrong_reflex": "Giảm giá hoặc tuyển thêm sales khi khách chưa thấy giá trị đủ nhanh.",
+      "candidate_lights": [
+        "Time-to-first-value (TTFV)",
+        "Pipeline coverage",
+        "% deal chết ở khâu security/procurement",
+        "POC → paid",
+        "Sales cycle (ngày)",
+        "Usage depth trong tài khoản",
+        "Chi phí triển khai ÷ ACV",
+        "Tập trung doanh thu",
+        "NRR",
+        "Gross Margin",
+        "CAC payback"
+      ]
+    },
+    "B2B2C": {
+      "diagnosis": {
+        "payer": "Doanh nghiệp/partner trả tiền hoặc chia sẻ doanh thu.",
+        "primary_user": "End-user là khách hàng/người dùng của partner.",
+        "end_user_surface": "Sản phẩm có bề mặt, dữ liệu hoặc trải nghiệm trực tiếp đủ để đo hành vi end-user; nếu không, mặc định xem lại B2B."
+      },
+      "first_light": {
+        "canonical_name": "Partner activation rate",
+        "accepted_concepts": [
+          "tỷ lệ partner kích hoạt",
+          "activated partners",
+          "partner go-live có end-user thật"
+        ],
+        "proxy_rule": "Có thể dùng time-to-first-end-user hoặc end-user reach nếu bài chỉ ra nó báo trước partner activation và doanh thu/partner."
+      },
+      "common_wrong_reflex": "Ký thêm partner khi partner hiện có chưa activate.",
+      "candidate_lights": [
+        "Partner activation rate",
+        "End-user reach trong partner",
+        "Time-to-first-end-user",
+        "Volume volatility",
+        "GM sau rev-share",
+        "Chi phí inference ÷ doanh thu — theo từng partner",
+        "Tập trung volume",
+        "Chất lượng nhìn từ end-user",
+        "Doanh thu/partner · partner NRR · GM tổng"
+      ]
+    }
+  },
+  "grader_instruction": "Không chấm model hoặc first light bằng exact keyword. Dùng diagnosis và chuỗi nhân quả trong bài; nếu proxy hợp lý nhưng không chắc chắn, trả UNCERTAIN để human review."
+}

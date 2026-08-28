@@ -1,0 +1,330 @@
+{
+  "schema_version": "1.0.0",
+  "rubric_id": "day26-operating-dashboard",
+  "version": "2.0.0",
+  "status": "public",
+  "language": "vi",
+  "total_points": 100,
+  "rounding_increment": 0.5,
+  "default_score_rule": "Nếu item không có score_rule riêng: MET = max_points, NOT_MET = 0, UNCERTAIN = chưa chốt điểm và chuyển human review.",
+  "source_of_truth": "rubric/rubric-v2.json",
+  "submission_contract": {
+    "scored_artifacts": [
+      "Operating Dashboard một trang",
+      "phụ lục ngưỡng [MH] tối đa một trang",
+      "Markdown worksheet nguồn"
+    ],
+    "structural_gate": "scripts/validate_submission.py",
+    "structural_pass_is_not_a_score": true
+  },
+  "verdicts": {
+    "MET": "Bằng chứng trong bài đủ để trao toàn bộ điểm của item.",
+    "NOT_MET": "Bằng chứng vắng mặt, mâu thuẫn hoặc không đạt điều kiện item.",
+    "UNCERTAIN": "Không thể kết luận đáng tin cậy; bắt buộc chuyển human review."
+  },
+  "evidence_contract": {
+    "required_fields": ["section", "row_id", "field", "quote"],
+    "quote_max_characters": 240,
+    "rules": [
+      "Mỗi item phải trỏ tới bằng chứng cụ thể trong bài; không chấm theo ấn tượng chung.",
+      "NOT_MET vẫn phải nêu vị trí đã kiểm tra và phần bằng chứng còn thiếu.",
+      "Không suy diễn dữ liệu, nguồn hoặc ý định không xuất hiện trong artifact nộp bài.",
+      "Nếu nguồn bên ngoài không truy cập được hoặc ý nghĩa còn nhập nhằng, dùng UNCERTAIN."
+    ]
+  },
+  "criteria": [
+    {
+      "id": "TD",
+      "name": "Tier Discipline",
+      "max_points": 20,
+      "items": [
+        {
+          "id": "TD-01",
+          "max_points": 4,
+          "evaluator": "hybrid",
+          "condition": "Loại B2C/B2B/B2B2C được chẩn đoán nhất quán từ người trả tiền, người dùng và quyền chạm người dùng cuối.",
+          "score_rule": "4 nếu đủ và nhất quán cả ba thành phần; 0 nếu model không suy ra được từ bài."
+        },
+        {
+          "id": "TD-02",
+          "max_points": 4,
+          "evaluator": "semantic",
+          "condition": "North Star có mục tiêu đo được và phản ánh đèn bật trước của model profile đã chọn, hoặc bài giải thích thuyết phục một proxy dẫn đường tương đương.",
+          "score_rule": "4 nếu đúng đèn bật trước/proxy có chuỗi lập luận và có mục tiêu; 2 nếu đúng metric nhưng thiếu mục tiêu hoặc lập luận proxy; 0 nếu là lagging metric không được biện minh."
+        },
+        {
+          "id": "TD-03",
+          "max_points": 6,
+          "evaluator": "hybrid",
+          "condition": "Có ít nhất hai đèn Leading thật; mỗi đèn nêu rõ metric downstream mà nó báo trước và chuỗi nhân quả hợp lý.",
+          "score_rule": "2 điểm nếu có ít nhất hai Leading; cộng 4 × tỷ lệ đèn Leading có downstream và chuỗi hợp lý, làm tròn theo rounding_increment."
+        },
+        {
+          "id": "TD-04",
+          "max_points": 4,
+          "evaluator": "hybrid",
+          "condition": "Toàn bộ 6–8 đèn có định nghĩa/formula đo lặp lại được, nhịp theo dõi và owner vận hành.",
+          "score_rule": "4 × tỷ lệ đèn đủ cả định nghĩa/formula, nhịp và owner; làm tròn theo rounding_increment."
+        },
+        {
+          "id": "TD-05",
+          "max_points": 2,
+          "evaluator": "hybrid",
+          "condition": "Có ít nhất một đèn bắt chi phí AI/token/inference trước khi tác động chỉ xuất hiện ở gross margin.",
+          "score_rule": "2 nếu có metric chi phí AI trực tiếp; 0 nếu chỉ có gross margin hoặc không có."
+        }
+      ]
+    },
+    {
+      "id": "TQ",
+      "name": "Threshold Quality",
+      "max_points": 30,
+      "items": [
+        {
+          "id": "TQ-01",
+          "max_points": 4,
+          "evaluator": "hybrid",
+          "condition": "Mọi đèn có ba vùng xanh/vàng/đỏ khác nhau, không chồng lấn và đúng chiều tốt/xấu của metric.",
+          "score_rule": "4 × tỷ lệ đèn đạt đủ ba điều kiện; làm tròn theo rounding_increment."
+        },
+        {
+          "id": "TQ-02",
+          "max_points": 4,
+          "evaluator": "deterministic",
+          "condition": "Mỗi đèn dùng đúng một nhãn nguồn [BM], [MH] hoặc [TB], kèm một câu lý do.",
+          "score_rule": "4 × tỷ lệ đèn đạt điều kiện; làm tròn theo rounding_increment."
+        },
+        {
+          "id": "TQ-03",
+          "max_points": 6,
+          "evaluator": "hybrid",
+          "condition": "Nguồn truy vết được: [BM] có tên nguồn, URL trực tiếp và ngày kiểm tra; [MH] trỏ tới phép tính; [TB] nêu kế hoạch tạo baseline.",
+          "score_rule": "6 × tỷ lệ đèn có nguồn truy vết đúng theo loại; làm tròn theo rounding_increment."
+        },
+        {
+          "id": "TQ-04",
+          "max_points": 4,
+          "evaluator": "hybrid",
+          "condition": "MH-01 dùng input Day 24–25 có đơn vị, phép tính tái lập được và kết quả khớp ngưỡng áp dụng.",
+          "score_rule": "1 điểm cho input có đơn vị; 2 cho phép tính tái lập và số học đúng; 1 cho kết quả khớp ngưỡng dashboard."
+        },
+        {
+          "id": "TQ-05",
+          "max_points": 4,
+          "evaluator": "hybrid",
+          "condition": "MH-02 độc lập với MH-01, dùng input Day 24–25 có đơn vị, phép tính tái lập được và kết quả khớp ngưỡng áp dụng.",
+          "score_rule": "1 điểm cho input có đơn vị và độc lập; 2 cho phép tính tái lập và số học đúng; 1 cho kết quả khớp ngưỡng dashboard."
+        },
+        {
+          "id": "TQ-06",
+          "max_points": 8,
+          "evaluator": "semantic",
+          "condition": "Lý do đặt ngưỡng gắn với economics, baseline hoặc benchmark phù hợp và giải thích được vì sao vượt ngưỡng phải dẫn tới hành động đã chọn.",
+          "score_rule": "8 × tỷ lệ đèn có lý do đứng được và liên kết hành động; làm tròn theo rounding_increment."
+        }
+      ]
+    },
+    {
+      "id": "DR",
+      "name": "Decision Rule Quality",
+      "max_points": 30,
+      "items": [
+        {
+          "id": "DR-01",
+          "max_points": 5,
+          "evaluator": "hybrid",
+          "applies_to": "R-01",
+          "condition": "R-01 đủ NẾU/TRONG/VÀ/THÌ/KHÔNG THÌ; trigger có số, window chống nhiễu, mẫu tối thiểu, hành động tuần tới và phản xạ bị cấm liên quan.",
+          "score_rule": "Mỗi thành phần NẾU/TRONG/VÀ/THÌ/KHÔNG THÌ đạt yêu cầu được 1 điểm; sau đó áp dụng override."
+        },
+        {
+          "id": "DR-02",
+          "max_points": 5,
+          "evaluator": "hybrid",
+          "applies_to": "R-02",
+          "condition": "R-02 đủ NẾU/TRONG/VÀ/THÌ/KHÔNG THÌ; trigger có số, window chống nhiễu, mẫu tối thiểu, hành động tuần tới và phản xạ bị cấm liên quan.",
+          "score_rule": "Mỗi thành phần NẾU/TRONG/VÀ/THÌ/KHÔNG THÌ đạt yêu cầu được 1 điểm; sau đó áp dụng override."
+        },
+        {
+          "id": "DR-03",
+          "max_points": 5,
+          "evaluator": "hybrid",
+          "applies_to": "R-03",
+          "condition": "R-03 đủ NẾU/TRONG/VÀ/THÌ/KHÔNG THÌ; trigger có số, window chống nhiễu, mẫu tối thiểu, hành động tuần tới và phản xạ bị cấm liên quan.",
+          "score_rule": "Mỗi thành phần NẾU/TRONG/VÀ/THÌ/KHÔNG THÌ đạt yêu cầu được 1 điểm; sau đó áp dụng override."
+        },
+        {
+          "id": "DR-04",
+          "max_points": 5,
+          "evaluator": "hybrid",
+          "applies_to": "R-04",
+          "condition": "R-04 đủ NẾU/TRONG/VÀ/THÌ/KHÔNG THÌ; trigger có số, window chống nhiễu, mẫu tối thiểu, hành động tuần tới và phản xạ bị cấm liên quan.",
+          "score_rule": "Mỗi thành phần NẾU/TRONG/VÀ/THÌ/KHÔNG THÌ đạt yêu cầu được 1 điểm; sau đó áp dụng override."
+        },
+        {
+          "id": "DR-05",
+          "max_points": 5,
+          "evaluator": "hybrid",
+          "applies_to": "R-05",
+          "condition": "R-05 đủ NẾU/TRONG/VÀ/THÌ/KHÔNG THÌ; trigger có số, window chống nhiễu, mẫu tối thiểu, hành động tuần tới và phản xạ bị cấm liên quan.",
+          "score_rule": "Mỗi thành phần NẾU/TRONG/VÀ/THÌ/KHÔNG THÌ đạt yêu cầu được 1 điểm; sau đó áp dụng override."
+        },
+        {
+          "id": "DR-06",
+          "max_points": 5,
+          "evaluator": "hybrid",
+          "condition": "Có ít nhất hai luật dừng một hành vi hoặc khoản đầu tư đang diễn ra; các luật dừng khả thi và không chỉ đổi tên thành theo dõi thêm.",
+          "score_rule": "2.5 điểm cho mỗi luật dừng hợp lệ, tối đa 5."
+        }
+      ]
+    },
+    {
+      "id": "GT",
+      "name": "90-Day Gates",
+      "max_points": 15,
+      "items": [
+        {
+          "id": "GT-30",
+          "max_points": 4,
+          "evaluator": "hybrid",
+          "condition": "Cổng ngày 30 đo đúng một learning/validation metric, có ngưỡng số, bằng chứng vật lý, GO nếu đạt và FIX/PIVOT/KILL nếu trượt.",
+          "score_rule": "Mỗi thành phần đúng stage và một metric / ngưỡng số / bằng chứng / cặp quyết định đạt-trượt được 1 điểm."
+        },
+        {
+          "id": "GT-60",
+          "max_points": 4,
+          "evaluator": "hybrid",
+          "condition": "Cổng ngày 60 đo đúng một operating metric, có ngưỡng số, bằng chứng vật lý, GO nếu đạt và FIX/PIVOT/KILL nếu trượt.",
+          "score_rule": "Mỗi thành phần đúng stage và một metric / ngưỡng số / bằng chứng / cặp quyết định đạt-trượt được 1 điểm."
+        },
+        {
+          "id": "GT-90",
+          "max_points": 4,
+          "evaluator": "hybrid",
+          "condition": "Cổng ngày 90 đo đúng một model/economics metric, có ngưỡng số, bằng chứng vật lý, GO nếu đạt và FIX/PIVOT/KILL nếu trượt.",
+          "score_rule": "Mỗi thành phần đúng stage và một metric / ngưỡng số / bằng chứng / cặp quyết định đạt-trượt được 1 điểm."
+        },
+        {
+          "id": "GT-KILL",
+          "max_points": 3,
+          "evaluator": "hybrid",
+          "condition": "Kill criteria là một điều kiện falsifiable có số, mốc thời gian và tuyên bố dừng hướng sản phẩm.",
+          "score_rule": "1 điểm cho điều kiện đo được; 1 cho số; 1 cho mốc thời gian và tuyên bố dừng."
+        }
+      ]
+    },
+    {
+      "id": "HO",
+      "name": "Honesty",
+      "max_points": 5,
+      "items": [
+        {
+          "id": "HO-01",
+          "max_points": 1,
+          "evaluator": "semantic",
+          "condition": "Nêu ít nhất một đèn hoặc giả định thật sự chưa đo được."
+        },
+        {
+          "id": "HO-02",
+          "max_points": 1,
+          "evaluator": "semantic",
+          "condition": "Nêu artifact, log, data, interview hoặc hợp đồng cần có để đo khoảng trống."
+        },
+        {
+          "id": "HO-03",
+          "max_points": 1,
+          "evaluator": "deterministic",
+          "condition": "Chỉ định owner theo vai trò cho kế hoạch đo."
+        },
+        {
+          "id": "HO-04",
+          "max_points": 1,
+          "evaluator": "deterministic",
+          "condition": "Có ngày ISO hợp lệ để khoảng trống trở thành số."
+        },
+        {
+          "id": "HO-05",
+          "max_points": 1,
+          "evaluator": "semantic",
+          "condition": "Trạng thái đo được/chưa đo được nhất quán giữa inventory, dashboard và phần khoảng trống; không bịa evidence để lấp ô."
+        }
+      ]
+    }
+  ],
+  "caps": [
+    {
+      "id": "CAP-TD-WRONG-MODEL",
+      "criterion_id": "TD",
+      "max_criterion_points": 10,
+      "condition": "Chọn sai loại mô hình rõ ràng so với payer/user/end-user surface trong chính bài nộp."
+    },
+    {
+      "id": "CAP-TD-LAGGING-MAJORITY",
+      "criterion_id": "TD",
+      "max_criterion_points": 8,
+      "condition": "Hơn 50% metric được xếp ở tầng Lagging."
+    },
+    {
+      "id": "CAP-TQ-UNTRACEABLE",
+      "criterion_id": "TQ",
+      "max_criterion_points": 10,
+      "condition": "Có benchmark hoặc con số nguồn ngoài được dùng để biện minh ngưỡng nhưng không thể truy về nguồn hỗ trợ cho claim."
+    }
+  ],
+  "overrides": [
+    {
+      "id": "OVR-DR-VAGUE-THEN",
+      "target_item_pattern": "DR-0[1-5]",
+      "effect": "item_score_zero",
+      "condition": "Vế THÌ chỉ nói xem xét/cân nhắc/theo dõi thêm/đánh giá lại hoặc một biến thể không tạo hành động kiểm chứng được."
+    },
+    {
+      "id": "OVR-DR-MISSING-FORBIDDEN",
+      "target_item_pattern": "DR-0[1-5]",
+      "effect": "item_score_cap_2_5",
+      "condition": "Luật thiếu KHÔNG THÌ hoặc vế này không mô tả phản xạ bị cấm."
+    },
+    {
+      "id": "OVR-GT30-REVENUE",
+      "target_item_pattern": "GT-30",
+      "effect": "item_score_zero",
+      "condition": "Metric chính của cổng ngày 30 là doanh thu thay vì learning/validation."
+    },
+    {
+      "id": "OVR-GT-VAGUE",
+      "target_item_pattern": "GT-(30|60|90)",
+      "effect": "item_score_zero",
+      "condition": "Cổng dùng mô tả mơ hồ như có traction tốt mà không có ngưỡng đo được."
+    }
+  ],
+  "scoring_order": [
+    "Chạy structural gate và ghi lỗi; lỗi cấu trúc không tự động biến thành tổng điểm 0.",
+    "Chấm từng item bằng MET, NOT_MET hoặc UNCERTAIN và neo evidence.",
+    "Áp dụng override ở cấp item, không trừ điểm lần hai cho cùng một lỗi.",
+    "Cộng điểm item theo criterion rồi áp dụng cap criterion thấp nhất nếu có.",
+    "Cộng năm criterion, giới hạn tổng trong khoảng 0–100 và gán grade band.",
+    "Chuyển human review theo review_policy trước khi công bố điểm cuối."
+  ],
+  "grade_bands": [
+    {"id": "OUTSTANDING", "min": 90, "max": 100, "label": "Outstanding"},
+    {"id": "STRONG", "min": 75, "max": 89.99, "label": "Strong"},
+    {"id": "PASS", "min": 60, "max": 74.99, "label": "Pass"},
+    {"id": "NEEDS_REWORK", "min": 40, "max": 59.99, "label": "Needs rework"},
+    {"id": "FAIL", "min": 0, "max": 39.99, "label": "Fail"}
+  ],
+  "review_policy": {
+    "human_review_required_when": [
+      "Bất kỳ item nào có verdict UNCERTAIN.",
+      "Bất kỳ source verification nào không truy cập được hoặc mâu thuẫn.",
+      "Bất kỳ cap nào được kích hoạt.",
+      "Tổng điểm cách ranh giới grade band không quá 2 điểm.",
+      "Chênh lệch giữa hai lượt chấm độc lập lớn hơn 8 điểm."
+    ],
+    "appeal_basis": "Học viên có thể phản hồi theo item ID và cung cấp đúng evidence anchor hoặc nguồn bị bỏ sót.",
+    "prohibited_inputs": [
+      "Tên học viên khi chấm semantic nếu có thể ẩn danh.",
+      "Thông tin nhân khẩu học hoặc lịch sử điểm không thuộc artifact.",
+      "Tiêu chí bí mật làm thay đổi điểm."
+    ]
+  }
+}
